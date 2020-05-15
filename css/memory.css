@@ -342,6 +342,14 @@ h1 {
 
 /****** Media queries
 ***************************/
+@media (max-width: 420px) {
+  .deck .card .back img {
+    position: relative;
+    width: 33px;
+    height: auto;
+    top: 9%;
+  }
+}
 
 @media (max-width: 320px) {
   .deck {
