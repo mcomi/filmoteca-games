@@ -66,12 +66,15 @@ h1 {
   width: 100%;
   height: 100%;
   transition: transform 1s;
+  transition: -webkit-transform 1s;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
 }
 
 .card .front,
 .card .back {
   backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   box-sizing: border-box;
   color: white;
   display: block;
@@ -92,6 +95,7 @@ h1 {
 
 .card .front {
   padding: 0;
+  -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
 }
 
@@ -109,8 +113,10 @@ h1 {
 }
 
 .deck .card.open .content {
+  -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
   transition: transform 0.5s;
+  transition: -webkit-transform 0.5s;
 }
 
 .deck .card.match .content {
