@@ -110,9 +110,10 @@ function cardOpen() {
 function matched() {
   openedCards[0].classList.add("match", "disabled");
   openedCards[1].classList.add("match", "disabled");
-  openedCards[0].classList.remove("show", "open", "no-event");
-  openedCards[1].classList.remove("show", "open", "no-event");
+  openedCards[0].classList.remove("no-event");
+  openedCards[1].classList.remove("no-event");
   openedCards = [];
+  congratulations();
 }
 
 // description when cards don't match
@@ -234,5 +235,5 @@ for (var i = 0; i < cards.length; i++) {
   card = cards[i];
   card.addEventListener("click", displayCard);
   card.addEventListener("click", cardOpen);
-  card.addEventListener("click", congratulations);
+  // card.addEventListener("click", congratulations);
 }

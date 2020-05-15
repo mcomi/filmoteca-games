@@ -114,26 +114,33 @@ h1 {
 }
 
 .deck .card.match .content {
-  transform: rotateY(180deg);
+  /* transform: rotateY(180deg); */
   border-radius: 5px;
   cursor: default;
-  background: rgba(229, 247, 32, 0.7);
-  font-size: 33px;
   animation-name: rubberBand;
-  -webkit-backface-visibility: visible !important;
-  backface-visibility: visible !important;
+  -webkit-backface-visibility: hidden !important;
+  backface-visibility: hidden !important;
   animation-duration: 0.75s;
 }
 
-.deck .card.match img {
-  opacity: 0.4;
+.deck .card.match .content .front {
+  background: rgba(229, 247, 32, 0.7);
 }
+
+.deck .card.match .content .front img {
+  opacity: 0.5;
+}
+
+.card.match .content .back {
+  background: rgba(229, 247, 32, 1);
+}
+
 .deck .card.unmatched .content .front {
   /* transform: rotateY(180deg); */
   animation-name: pulse;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
-  animation-duration: 1s;
+  animation-duration: 0.75s;
   background: rgba(226, 4, 59, 1);
   border: 1px solid #e2043b;
 }
@@ -145,24 +152,6 @@ h1 {
 .deck .card.disabled {
   pointer-events: none;
   opacity: 0.9;
-}
-
-@-webkit-keyframes giro {
-  from {
-    transform: rotateY(180deg);
-  }
-  to {
-    transform: rotateY(0deg);
-  }
-}
-
-@keyframes giro {
-  from {
-    transform: rotateY(180deg);
-  }
-  to {
-    transform: rotateY(0deg);
-  }
 }
 
 /*
@@ -236,6 +225,10 @@ h1 {
   margin-top: 0;
   color: #333;
   font-family: Tahoma, Arial, sans-serif;
+}
+.overlay.show {
+  visibility: visible !important;
+  opacity: 100 !important;
 }
 
 .popup .close {
