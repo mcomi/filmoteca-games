@@ -1,109 +1,275 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>Memoria</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
-    <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Permanent+Marker" >
-    <link rel="stylesheet" href="css/memory.css">
-</head>
-<body>
-
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet prefetch"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+    />
+    <link
+      rel="stylesheet prefetch"
+      href="https://fonts.googleapis.com/css?family=Coda"
+    />
+    <link
+      rel="stylesheet prefetch"
+      href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Permanent+Marker"
+    />
+    <link rel="stylesheet" href="css/memory.css" />
+  </head>
+  <body>
     <div class="container">
-        <header>
-            <h1>Memoria</h1>
-        </header>
+      <header>
+        <h1>Memoria</h1>
+      </header>
 
-        <section class="score-panel">
-        	<ul class="stars">
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
-
-        	<span class="moves">0</span> Intento(s)
-
-            <div class="timer">
-            </div>
-
-            <div class="restart" onclick=startGame()>
-        		<i class="fa fa-repeat"></i>
-        	</div>
-        </section>
-
-        <ul class="deck" id="card-deck">
-            <li class="card" type="amoresperros">
-                <img src="images/amoresperros.jpg" alt="">
-            </li>
-            <li class="card" type="herodes">
-                <img src="images/herodes.jpg" alt="">
-            </li>
-            <li class="card match" type="huastecos">
-                <img src="images/huastecos.jpg" alt="">
-            </li>
-            <li class="card" type="macario" >
-                <img src="images/macario.jpeg" alt="">
-            </li>
-            <li class="card" type="dinero">
-                <img src="images/necesitodinero.jpg" alt="">
-            </li>
-            <li class="card match" type="huastecos">
-                <img src="images/huastecos.jpg" alt="">
-            </li>
-            <li class="card" type="olvidados">
-               <img src="images/olvidados.jpg" alt="">
-            </li>
-            <li class="card" type="amoresperros">
-              <img src="images/amoresperros.jpg" alt="">
-            </li>
-            <li class="card" type="vagabundos">
-                <img src="images/vagabundos.jpg" alt="">
-            </li>
-            <li class="card" type="vertigo">
-                <img src="images/vertigo.jpg" alt="">
-            </li>
-            <li class="card" type="olvidados">
-               <img src="images/olvidados.jpg" alt="">
-            </li>
-            <li class="card" type="vertigo">
-                <img src="images/vertigo.jpg" alt="">
-            </li>
-            <li class="card open show" macario="bolt">
-                <img src="images/macario.jpeg" alt="">
-            </li>
-            <li class="card" type="vagabundos">
-              <img src="images/vagabundos.jpg" alt="">
-            </li>
-            <li class="card" type="herodes">
-                <img src="images/herodes.jpg" alt="">
-            </li>
-            <li class="card" type="dinero">
-                <img src="images/necesitodinero.jpg" alt="">
-            </li>
+      <section class="score-panel">
+        <ul class="stars">
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
         </ul>
 
-        <div id="popup1" class="overlay">
-            <div class="popup">
-                <h2>Felicidades 🎉</h2>
-                <a class="close" href=# >×</a>
-                <div class="content-1">
-                    ¡Eres un ganador! 🎉🎉
-                </div>
-                <div class="content-2">
-                    <p>Hiciste <span id=finalMove> </span> intentos </p>
-                    <p>en <span id=totalTime> </span> </p>
-                    <p>Rating:  <span id=starRating></span></p>
-                </div>
-                <button id="play-again"onclick="playAgain()">
-                    Jugar de nuevo 😄</a>
-                </button>
-            </div>
-        </div>
+        <span class="moves">0</span> Intento(s)
 
+        <div class="timer"></div>
+
+        <div class="restart" onclick="startGame()">
+          <i class="fa fa-repeat"></i>
+        </div>
+      </section>
+
+      <ul class="deck" id="card-deck">
+        <li class="card" type="amoresperros">
+          <div class="content">
+            <div class="front">
+              <img src="images/amoresperros.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="herodes">
+          <div class="content">
+            <div class="front">
+              <img src="images/herodes.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="huastecos">
+          <div class="content">
+            <div class="front">
+              <img src="images/huastecos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="macario">
+          <div class="content">
+            <div class="front">
+              <img src="images/macario.jpeg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="dinero">
+          <div class="content">
+            <div class="front">
+              <img src="images/necesitodinero.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card match" type="huastecos">
+          <div class="content">
+            <div class="front">
+              <img src="images/huastecos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="olvidados">
+          <div class="content">
+            <div class="front">
+              <img src="images/olvidados.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="amoresperros">
+          <div class="content">
+            <div class="front">
+              <img src="images/amoresperros.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vagabundos">
+          <div class="content">
+            <div class="front">
+              <img src="images/vagabundos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vertigo">
+          <div class="content">
+            <div class="front">
+              <img src="images/vertigo.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="olvidados">
+          <div class="content">
+            <div class="front">
+              <img src="images/olvidados.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vertigo">
+          <div class="content">
+            <div class="front">
+              <img src="images/vertigo.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card open show" macario="bolt">
+          <div class="content">
+            <div class="front">
+              <img src="images/macario.jpeg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vagabundos">
+          <div class="content">
+            <div class="front">
+              <img src="images/vagabundos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="herodes">
+          <div class="content">
+            <div class="front">
+              <img src="images/herodes.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="dinero">
+          <div class="content">
+            <div class="front">
+              <img src="images/necesitodinero.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div id="popup1" class="overlay">
+        <div class="popup">
+          <h2>Felicidades 🎉</h2>
+          <a class="close" href="#">×</a>
+          <div class="content-1">
+            ¡Eres un ganador! 🎉🎉
+          </div>
+          <div class="content-2">
+            <p>Hiciste <span id="finalMove"> </span> intentos</p>
+            <p>en <span id="totalTime"> </span></p>
+            <p>Rating: <span id="starRating"></span></p>
+          </div>
+          <button id="play-again" onclick="playAgain()">
+            Jugar de nuevo 😄
+          </button>
+        </div>
+      </div>
     </div>
     <script src="js/memory.js"></script>
-</body>
+  </body>
 </html>

@@ -54,46 +54,68 @@ h1 {
   height: 3.7rem;
   width: 3.7rem;
   margin: 0.2rem 0.2rem;
-  background: #141214;
-  font-size: 0;
-  color: #ffffff;
-  border-radius: 5px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 200px;
+}
+
+.content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+}
+
+.card .front,
+.card .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  color: white;
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  padding: 0.8em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
-.deck .card img {
-  opacity: 0;
-  height: 0;
-  width: 0;
-  object-fit: cover;
-  -webkit-transform: rotateY(-180deg);
-  transform: rotateY(-180deg);
+
+.card .back {
+  background: #141214;
+  color: #ffffff;
 }
-.deck .card.open img {
-  opacity: 1;
+
+.card .front {
+  padding: 0;
+  transform: rotateY(180deg);
+}
+
+.card .front img {
+  border-radius: 5px;
   height: 100%;
   width: 100%;
+  object-fit: cover;
+}
+.card .back img {
+  position: relative;
+  width: 89px;
+  height: auto;
+  top: 25%;
 }
 
-.deck .card.open {
-  transform: rotateY(0);
-  background: #02b3e4;
-  border: 1px solid #02b3e4;
-  cursor: default;
-  animation-name: flipInY;
-  -webkit-backface-visibility: visible !important;
-  backface-visibility: visible !important;
-  animation-duration: 0.75s;
+.deck .card.open .content {
+  transform: rotateY(180deg);
+  transition: transform 0.5s;
 }
 
-.deck .card.show {
-  font-size: 33px;
-}
-
-.deck .card.match {
+.deck .card.match .content {
+  transform: rotateY(180deg);
+  border-radius: 5px;
   cursor: default;
   background: rgba(229, 247, 32, 0.7);
   font-size: 33px;
@@ -104,20 +126,43 @@ h1 {
 }
 
 .deck .card.match img {
-  opacity: 0.7;
+  opacity: 0.4;
 }
-.deck .card.unmatched {
+.deck .card.unmatched .content .front {
+  /* transform: rotateY(180deg); */
   animation-name: pulse;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
-  animation-duration: 0.75s;
-  background: #e2043b;
+  animation-duration: 1s;
+  background: rgba(226, 4, 59, 1);
   border: 1px solid #e2043b;
+}
+
+.deck .card.unmatched img {
+  opacity: 0;
 }
 
 .deck .card.disabled {
   pointer-events: none;
   opacity: 0.9;
+}
+
+@-webkit-keyframes giro {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes giro {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
 }
 
 /*
@@ -213,11 +258,6 @@ h1 {
   max-height: 30%;
   overflow: auto;
   text-align: center;
-}
-
-.show {
-  visibility: visible !important;
-  opacity: 100 !important;
 }
 
 #starRating li {

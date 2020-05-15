@@ -95,9 +95,13 @@ function cardOpen() {
   if (len === 2) {
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
-      matched();
+      setTimeout(function () {
+        matched();
+      }, 500);
     } else {
-      unmatched();
+      setTimeout(function () {
+        unmatched();
+      }, 500);
     }
   }
 }
