@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carga de imágenes</title>
+  </head>
+  <body>
+    <form
+      action="http://localhost:8080/api/images"
+      enctype="multipart/form-data"
+      method="post"
+      id="upload-form"
+      onsubmit="uploadFile(event,this)"
+    >
+      <input type="text" id="alias" name="alias" />
+      <textarea
+        name="description"
+        id="description"
+        cols="30"
+        rows="10"
+      ></textarea>
+      <input type="file" id="imagen" name="imagen" />
+      <button type="submit">Guardar</button>
+    </form>
+    <script src="js/upload.js"></script>
+  </body>
+</html>
