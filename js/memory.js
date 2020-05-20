@@ -1,9 +1,78 @@
+let datos;
+fetch("http://localhost:8080/api/images")
+  .then((res) => res.json())
+  .then((json) => {
+    datos = json.data;
+    generateCardsHtml(datos);
+  });
+
+function generateImageObjectUrl(imageData) {
+  if (imageData !== null) {
+    var arrayBufferView = new Uint8Array(imageData);
+    var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+    var urlCreator = window.URL || window.webkitURL;
+    var imageUrl = urlCreator.createObjectURL(blob);
+    return imageUrl;
+  } else {
+    return "";
+  }
+}
+
 // cards array holds all cards
-let card = document.getElementsByClassName("card");
-let cards = [...card];
+var card;
+var cards;
 
 // deck of all cards in game
-const deck = document.getElementById("card-deck");
+var deck = document.getElementById("card-deck");
+function generateCardsHtml(arrImagenes) {
+  const html = arrImagenes
+    .map((item) => {
+      return `<li class="card" type="${item.nombre_img.split(".")[0]}">
+    <div class="content">
+      <div class="front">
+        <img src="${
+          item.data !== null ? generateImageObjectUrl(item.data.data) : ""
+        }" alt="" />
+      </div>
+      <div class="back">
+        <img
+          src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </li>
+  <li class="card" type="${item.nombre_img.split(".")[0]}">
+    <div class="content">
+      <div class="front">
+        <img src="${
+          item.data !== null ? generateImageObjectUrl(item.data.data) : ""
+        }" alt="" />
+      </div>
+      <div class="back">
+        <img
+          src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </li>`;
+    })
+    .join("");
+  deck.innerHTML = html;
+  // cards array holds all cards
+  card = document.getElementsByClassName("card");
+  cards = [...card];
+  // @description shuffles cards when page is refreshed / loads
+  // loop to add event listeners to each card
+  startGame();
+  for (var i = 0; i < cards.length; i++) {
+    card = cards[i];
+    card.addEventListener("click", displayCard);
+    card.addEventListener("click", cardOpen);
+    // card.addEventListener("click", congratulations);
+  }
+}
 
 // declaring move variable
 let moves = 0;
@@ -46,9 +115,6 @@ function shuffle(array) {
   return array;
 }
 
-// @description shuffles cards when page is refreshed / loads
-document.body.onload = startGame();
-
 // @description function to start a new play
 function startGame() {
   // empty the openCards array
@@ -79,6 +145,7 @@ function startGame() {
   var timer = document.querySelector(".timer");
   timer.innerHTML = "0 mins 0 secs";
   clearInterval(interval);
+  document.getElementById("loader").style.display = "none";
 }
 
 // @description toggles open and show class to display cards
@@ -180,7 +247,7 @@ hour = 0;
 var timer = document.querySelector(".timer");
 var interval;
 function startTimer() {
-  interval = setInterval(function () {
+  interval = new IntervalTimer(function () {
     timer.innerHTML = minute + "mins " + second + "secs";
     second++;
     if (second == 60) {
@@ -194,12 +261,64 @@ function startTimer() {
   }, 1000);
 }
 
+function IntervalTimer(callback, interval) {
+  var timerId,
+    startTime,
+    remaining = 0;
+  var state = 0; //  0 = idle, 1 = running, 2 = paused, 3= resumed
+
+  this.pause = function () {
+    if (state != 1) return;
+
+    remaining = interval - (new Date() - startTime);
+    window.clearInterval(timerId);
+    state = 2;
+  };
+
+  this.resume = function () {
+    if (state != 2) return;
+
+    state = 3;
+    window.setTimeout(this.timeoutCallback, remaining);
+  };
+
+  this.timeoutCallback = function () {
+    if (state != 3) return;
+
+    callback();
+
+    startTime = new Date();
+    timerId = window.setInterval(callback, interval);
+    state = 1;
+  };
+
+  startTime = new Date();
+  timerId = window.setInterval(callback, interval);
+  state = 1;
+}
+
 // @description congratulations when all cards match, show modal and moves, time and rating
+const btnShowForm = document.getElementById("submit-score");
+const submitForm = document.getElementById("form-submit");
+const winDialog = document.getElementById("win-dialog");
+const countrySelect = document.getElementById("country");
+const estadosSelect = document.getElementById("estados");
+
+btnShowForm.addEventListener("click", function () {
+  submitForm.classList.remove("hidden");
+  winDialog.classList.add("hidden");
+});
+
+countrySelect.addEventListener("change", function () {
+  if (this.value === "MEX") {
+    estadosSelect.classList.remove("hidden");
+  }
+});
 function congratulations() {
   if (matchedCard.length == 16) {
-    clearInterval(interval);
+    interval.pause();
     finalTime = timer.innerHTML;
-
+    console.log(hour, minute, second);
     // show congratulations modal
     modal.classList.add("show");
 
@@ -230,10 +349,11 @@ function playAgain() {
   startGame();
 }
 
-// loop to add event listeners to each card
-for (var i = 0; i < cards.length; i++) {
-  card = cards[i];
-  card.addEventListener("click", displayCard);
-  card.addEventListener("click", cardOpen);
-  // card.addEventListener("click", congratulations);
+function Results() {
+  this.juego = "memoria";
+  this.seudonimo = "";
+  this.pais = null;
+  this.estado_mex = null;
+  this.clicks = 0;
+  this.tiempoSec = 0;
 }
