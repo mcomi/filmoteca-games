@@ -1,11 +1,17 @@
-let datos;
-fetch("http://localhost:8080/api/images")
-  .then((res) => res.json())
-  .then((json) => {
-    datos = json.data;
-    generateCardsHtml(datos);
-  });
+let datosApi;
+// get images from api
+function getImagesFromApi() {
+  fetch("http://localhost:8080/api/images")
+    .then((res) => res.json())
+    .then((json) => {
+      datosApi = json.data;
+      generateCardsHtml(datosApi);
+    });
+}
 
+getImagesFromApi();
+
+// function to generate an object url so the image in the db can be display
 function generateImageObjectUrl(imageData) {
   if (imageData !== null) {
     var arrayBufferView = new Uint8Array(imageData);
@@ -24,6 +30,8 @@ var cards;
 
 // deck of all cards in game
 var deck = document.getElementById("card-deck");
+
+// generates de html by mapping all the image objects in the array received
 function generateCardsHtml(arrImagenes) {
   const html = arrImagenes
     .map((item) => {
@@ -70,8 +78,18 @@ function generateCardsHtml(arrImagenes) {
     card = cards[i];
     card.addEventListener("click", displayCard);
     card.addEventListener("click", cardOpen);
-    // card.addEventListener("click", congratulations);
   }
+}
+
+const infoModal = document.getElementById("info-modal");
+const infoContent = document.getElementById("content-info");
+function generateModalDescription(type) {
+  const itemToShow = datosApi.find((item) => {
+    return item.nombre_img.includes(type);
+  });
+  infoContent.innerHTML = itemToShow.info_img;
+  infoModal.classList.add("show");
+  closeInfoModal();
 }
 
 // declaring move variable
@@ -162,7 +180,10 @@ function cardOpen() {
   if (len === 2) {
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
+      var type = openedCards[0].type;
       setTimeout(function () {
+        generateModalDescription(type);
+        interval.pause();
         matched();
       }, 500);
     } else {
@@ -298,11 +319,26 @@ function IntervalTimer(callback, interval) {
 }
 
 // @description congratulations when all cards match, show modal and moves, time and rating
+const inputNickname = document.getElementById("nickname");
 const btnShowForm = document.getElementById("submit-score");
 const submitForm = document.getElementById("form-submit");
 const winDialog = document.getElementById("win-dialog");
 const countrySelect = document.getElementById("country");
 const estadosSelect = document.getElementById("estados");
+const btnSendResults = document.getElementById("submit-results");
+
+function validateForm() {
+  if (countrySelect.value !== "MEX" && inputNickname.value !== "") {
+    btnSendResults.disabled = false;
+  }
+  if (
+    countrySelect.value === "MEX" &&
+    estadosSelect.value !== "" &&
+    inputNickname.value !== ""
+  ) {
+    btnSendResults.disabled = false;
+  }
+}
 
 btnShowForm.addEventListener("click", function () {
   submitForm.classList.remove("hidden");
@@ -312,8 +348,33 @@ btnShowForm.addEventListener("click", function () {
 countrySelect.addEventListener("change", function () {
   if (this.value === "MEX") {
     estadosSelect.classList.remove("hidden");
+  } else {
+    validateForm();
   }
 });
+
+estadosSelect.addEventListener("change", validateForm);
+
+// search for pseudonim in db
+inputNickname.addEventListener("focusout", function () {
+  const nickname = this.value;
+  fetch(`http://localhost:8080/api/results/${nickname}`)
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.data) {
+        document.getElementById("error-message").innerHTML =
+          "Este seudónimo ya está en uso, intenta con otro";
+      } else {
+        document.getElementById("error-message").innerHTML = "";
+      }
+    });
+});
+
+btnSendResults.addEventListener("click", function () {
+  this.disabled = true;
+  submitResult();
+});
+
 function congratulations() {
   if (matchedCard.length == 16) {
     interval.pause();
@@ -343,17 +404,92 @@ function closeModal() {
   });
 }
 
+const closeIconInfo = document.querySelector(".close-icon");
+function closeInfoModal() {
+  closeIconInfo.addEventListener("click", function (e) {
+    infoModal.classList.remove("show");
+    interval.resume();
+  });
+}
+
 // @desciption for user to play Again
 function playAgain() {
   modal.classList.remove("show");
-  startGame();
+  gameContainer.classList.contains("hidden") &&
+    gameContainer.classList.remove("hidden");
+  !resultsContainer.classList.contains("hidden") &&
+    resultsContainer.classList.add("hidden");
+  document.getElementById("loader").style.display = "block";
+  getImagesFromApi();
 }
 
-function Results() {
+function submitResult() {
+  const result = new Result(
+    inputNickname.value,
+    countrySelect.value,
+    estadosSelect.value,
+    moves,
+    convertToSeconds(hour, minute, second)
+  );
+  const data = JSON.stringify(result);
+  fetch("http://localhost:8080/api/results/", {
+    method: "POST",
+    body: data,
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => getResults());
+}
+
+function getResults() {
+  fetch("http://localhost:8080/api/results")
+    .then((res) => res.json())
+    .then((res) => loadResults(res.data));
+}
+
+const gameContainer = document.getElementById("game-container");
+const resultsContainer = document.getElementById("results-table");
+const resultsHtml = document.getElementById("results");
+function loadResults(resultados) {
+  const htmlResultados = resultados
+    .map((item, index) => {
+      return `<tr>
+   <td>${index++}</td>
+   <td>${item.pais}</td>
+   <td>${item.seudonimo}</td>
+   <td>${item.clicks}</td>
+   <td>${formatTime(item.tiempoSec)}</td>`;
+    })
+    .join("");
+  gameContainer.classList.add("hidden");
+  resultsContainer.classList.remove("hidden");
+  resultsHtml.innerHTML = htmlResultados;
+}
+
+function Result(seudonimo, pais, estado_mex, clicks, tiempoSec) {
   this.juego = "memoria";
-  this.seudonimo = "";
-  this.pais = null;
-  this.estado_mex = null;
-  this.clicks = 0;
-  this.tiempoSec = 0;
+  this.seudonimo = seudonimo || "";
+  this.pais = pais || null;
+  this.estado_mex = estado_mex || null;
+  this.clicks = clicks || 0;
+  this.tiempoSec = tiempoSec || 0;
+}
+
+function convertToSeconds(hours = 0, minutes, seconds) {
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
+function formatTime(timestamp) {
+  var hours = Math.floor(timestamp / 60 / 60);
+  var minutes = Math.floor(timestamp / 60) - hours * 60;
+  var seconds = timestamp % 60;
+  if (hours > 0) {
+    return `${hours} horas ${minutes} minutos ${seconds} segundos`;
+  } else if (minutes > 0) {
+    return `${minutes} minutos ${seconds} segundos`;
+  } else {
+    return `${seconds} segundos`;
+  }
 }

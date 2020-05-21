@@ -25,7 +25,7 @@
       <a href="hangman.html">El Ahorcado</a>
       <a href="memory.html">Memoria</a>
     </section>
-    <div class="container">
+    <div class="container" id="game-container">
       <header>
         <h1>Memoria</h1>
       </header>
@@ -259,6 +259,13 @@
         </li>
       </ul>
 
+      <div id="info-modal" class="overlay">
+        <div class="popup">
+          <a class="close-icon" id="" href="#">×</a>
+          <div id="content-info" class="content-info"></div>
+        </div>
+      </div>
+
       <div id="popup1" class="overlay">
         <div class="popup">
           <div id="win-dialog">
@@ -281,6 +288,7 @@
           </div>
           <div id="form-submit" class="hidden">
             <input
+              id="nickname"
               type="text"
               class="css-input"
               placeholder="Escribe tu seudónimo"
@@ -587,6 +595,21 @@
           </div>
         </div>
       </div>
+    </div>
+    <div class="container hidden" id="results-table">
+      <table>
+        <thead>
+          <th>Lugar</th>
+          <th>País</th>
+          <th>Seudónimo</th>
+          <th>Intentos</th>
+          <th>Tiempo</th>
+        </thead>
+        <tbody id="results"></tbody>
+      </table>
+      <button id="play-again" class="btn" onclick="playAgain()">
+        Jugar de nuevo 😄
+      </button>
     </div>
     <script src="js/memory.js"></script>
   </body>
