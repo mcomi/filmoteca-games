@@ -17,19 +17,18 @@
       rel="stylesheet prefetch"
       href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah|Permanent+Marker"
     />
+    <link
+      rel="stylesheet prefetch"
+      href="https://fonts.googleapis.com/css?family=Open+Sans"
+    />
     <link rel="stylesheet" href="css/memory.css" />
+    <link rel="stylesheet" href="css/flags32-iso-3166-1-alpha-3.css" />
   </head>
   <body>
     <section>
-      <a href="puzzle.html">Rompecabezas</a>
-      <a href="hangman.html">El Ahorcado</a>
-      <a href="memory.html">Memoria</a>
+      <a href="index.html">Inicio</a>
     </section>
     <div class="container" id="game-container">
-      <header>
-        <h1>Memoria</h1>
-      </header>
-
       <section class="score-panel">
         <ul class="stars">
           <li><i class="fa fa-star"></i></li>
@@ -599,15 +598,20 @@
     <div class="container hidden" id="results-table">
       <table>
         <thead>
-          <th>Lugar</th>
-          <th>País</th>
-          <th>Seudónimo</th>
-          <th>Intentos</th>
-          <th>Tiempo</th>
+          <caption>
+            Tabla de Clasificación
+          </caption>
+          <tr>
+            <th scope="col">Lugar</th>
+            <th scope="col">País</th>
+            <th scope="col">Seudónimo</th>
+            <th scope="col">Intentos</th>
+            <th scope="col">Tiempo</th>
+          </tr>
         </thead>
         <tbody id="results"></tbody>
       </table>
-      <button id="play-again" class="btn" onclick="playAgain()">
+      <button id="play-again" class="btn mb-2" onclick="playAgain()">
         Jugar de nuevo 😄
       </button>
     </div>

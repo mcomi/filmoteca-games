@@ -68,7 +68,7 @@ if (window.FileReader) {
   alert("FileReader object not found :( \nTry using Chrome, Firefox or WebKit");
 }
 
-// jquery for clear image
+//  clear form and image preview
 function clearForm() {
   image.value = null;
   description.value = "";

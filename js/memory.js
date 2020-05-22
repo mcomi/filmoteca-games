@@ -456,11 +456,13 @@ function loadResults(resultados) {
   const htmlResultados = resultados
     .map((item, index) => {
       return `<tr>
-   <td>${index++}</td>
-   <td>${item.pais}</td>
-   <td>${item.seudonimo}</td>
-   <td>${item.clicks}</td>
-   <td>${formatTime(item.tiempoSec)}</td>`;
+   <td data-label="Lugar">${index + 1}</td>
+   <td data-label="País" class="f32"><span class="flag ${item.pais.toLowerCase()}"></span></td>
+   <script>
+   </script>
+   <td data-label="Seudónimo">${item.seudonimo}</td>
+   <td data-label="Intentos">${item.clicks}</td>
+   <td data-label="Tiempo">${formatTime(item.tiempoSec)}</td>`;
     })
     .join("");
   gameContainer.classList.add("hidden");
