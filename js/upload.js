@@ -15,13 +15,11 @@ const uploadFile = (e) => {
   // check file size (< 2MB)
   if (file.size > 2 * 1024 * 1024) {
     toastr.error("El archivo es muy grande, sólo 2MB máximo");
-    console.log("File must be less than 2MB.");
     return;
   }
 
   // add file to FormData object
   const fd = new FormData();
-  console.log(file, description.value);
   fd.append("imagen", file);
   fd.append("description", description.value);
 
@@ -52,3 +50,28 @@ toastr.options = {
   showMethod: "fadeIn",
   hideMethod: "fadeOut",
 };
+
+var preview = document.getElementById("uploadPreview");
+if (window.FileReader) {
+  var reader = new FileReader();
+
+  reader.onload = function (oFREvent) {
+    preview.src = oFREvent.target.result;
+    preview.style.display = "block";
+  };
+
+  function doTest() {
+    var file = document.getElementById("imagen").files[0];
+    reader.readAsDataURL(file);
+  }
+} else {
+  alert("FileReader object not found :( \nTry using Chrome, Firefox or WebKit");
+}
+
+// jquery for clear image
+function clearForm() {
+  image.value = null;
+  description.value = "";
+  preview.src = "";
+  preview.style.display = "none";
+}

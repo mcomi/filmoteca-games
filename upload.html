@@ -15,6 +15,12 @@
       rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
     />
+    <style>
+      img {
+        max-width: 200px;
+        height: auto;
+      }
+    </style>
   </head>
   <body>
     <div class="container mt-4">
@@ -49,13 +55,20 @@
                   id="imagen"
                   name="imagen"
                   required
+                  onchange="doTest()"
                 />
                 <label class="custom-file-label" for="imagen"
                   >Seleccionar archivo</label
                 >
               </div>
             </div>
+            <div class="form-group">
+              <img id="uploadPreview" src="" style="display: none;" />
+            </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn btn-danger" onclick="clearForm()">
+              Borrar formulario
+            </button>
           </form>
         </div>
       </div>
