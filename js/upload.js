@@ -1,6 +1,5 @@
 // select file input
 const image = document.getElementById("imagen");
-const alias = document.getElementById("alias");
 const description = document.getElementById("description");
 const btn = document.getElementById("uploadBtn");
 
@@ -8,26 +7,22 @@ const uploadFile = (e) => {
   e.preventDefault();
   // check file type
   const file = image.files[0];
-  if (
-    !["image/jpeg", "image/gif", "image/png", "image/svg+xml"].includes(
-      file.type
-    )
-  ) {
-    console.log("Only images are allowed.");
+  if (!["image/jpeg", "image/png"].includes(file.type)) {
+    toastr.error("No es un formato válido, solo JPG o PNG");
     return;
   }
 
   // check file size (< 2MB)
   if (file.size > 2 * 1024 * 1024) {
+    toastr.error("El archivo es muy grande, sólo 2MB máximo");
     console.log("File must be less than 2MB.");
     return;
   }
 
   // add file to FormData object
   const fd = new FormData();
-  console.log(file, alias.value, description.value);
+  console.log(file, description.value);
   fd.append("imagen", file);
-  fd.append("alias", alias.value);
   fd.append("description", description.value);
 
   // send `POST` request
@@ -36,6 +31,24 @@ const uploadFile = (e) => {
     body: fd,
   })
     .then((res) => res.json())
-    .then((json) => console.log(json))
-    .catch((err) => console.error(err));
+    .then((json) => toastr.success(json.message))
+    .catch((err) => toastr.error("Ocurrió un error, intenta de nuevo"));
+};
+
+toastr.options = {
+  closeButton: false,
+  debug: false,
+  newestOnTop: false,
+  progressBar: false,
+  positionClass: "toast-bottom-center",
+  preventDuplicates: false,
+  onclick: null,
+  showDuration: "300",
+  hideDuration: "1000",
+  timeOut: "5000",
+  extendedTimeOut: "1000",
+  showEasing: "swing",
+  hideEasing: "linear",
+  showMethod: "fadeIn",
+  hideMethod: "fadeOut",
 };
