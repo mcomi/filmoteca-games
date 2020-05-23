@@ -23,8 +23,8 @@ const uploadFile = (e) => {
   fd.append("imagen", file);
   fd.append("description", description.value);
 
-  // send `POST` request
-  fetch("http://localhost:8080/api/images", {
+  // send `POST` request http://132.247.164.46:8096/ http://localhost:8080
+  fetch("http://132.247.164.46:8096/api/images", {
     method: "POST",
     body: fd,
   })

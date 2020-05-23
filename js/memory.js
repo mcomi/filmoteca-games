@@ -1,10 +1,15 @@
 let datosApi;
+const url = "http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
-  fetch("http://localhost:8080/api/images")
+  fetch(url + "api/images")
     .then((res) => res.json())
     .then((json) => {
       datosApi = json.data;
+      if (datosApi.length < 8) {
+        alert("faltan suficientes imágenes");
+        return;
+      }
       generateCardsHtml(datosApi);
     });
 }
@@ -39,7 +44,9 @@ function generateCardsHtml(arrImagenes) {
     <div class="content">
       <div class="front">
         <img src="${
-          item.data !== null ? generateImageObjectUrl(item.data.data) : ""
+          item.data_blob !== null
+            ? generateImageObjectUrl(item.data_blob.data)
+            : ""
         }" alt="" />
       </div>
       <div class="back">
@@ -54,7 +61,9 @@ function generateCardsHtml(arrImagenes) {
     <div class="content">
       <div class="front">
         <img src="${
-          item.data !== null ? generateImageObjectUrl(item.data.data) : ""
+          item.data_blob !== null
+            ? generateImageObjectUrl(item.data_blob.data)
+            : ""
         }" alt="" />
       </div>
       <div class="back">
@@ -358,7 +367,7 @@ estadosSelect.addEventListener("change", validateForm);
 // search for pseudonim in db
 inputNickname.addEventListener("focusout", function () {
   const nickname = this.value;
-  fetch(`http://localhost:8080/api/results/${nickname}`)
+  fetch(`${url}api/results/${nickname}`)
     .then((res) => res.json())
     .then((res) => {
       if (res.data) {
@@ -432,7 +441,7 @@ function submitResult() {
     convertToSeconds(hour, minute, second)
   );
   const data = JSON.stringify(result);
-  fetch("http://localhost:8080/api/results/", {
+  fetch(url + "api/results/", {
     method: "POST",
     body: data,
     headers: {
@@ -444,7 +453,7 @@ function submitResult() {
 }
 
 function getResults() {
-  fetch("http://localhost:8080/api/results")
+  fetch(url + "api/results")
     .then((res) => res.json())
     .then((res) => loadResults(res.data));
 }
