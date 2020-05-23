@@ -1,5 +1,5 @@
 let datosApi;
-const url = "http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
+const url = "https://tinyurl.com/yanf76s7/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
   fetch(url + "api/images")
