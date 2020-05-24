@@ -40,7 +40,7 @@
 
         <div class="timer"></div>
 
-        <div class="restart" onclick="startGame()">
+        <div class="restart" onclick="playAgain()">
           <i class="fa fa-repeat"></i>
         </div>
       </section>
@@ -591,6 +591,10 @@
               Enviar y ver resultados
             </button>
             <span id="error-message"> </span>
+            <div class="form-group" id="info-container" style="display: none;">
+              <div class="lds-hourglass"></div>
+              Espere un momento
+            </div>
           </div>
         </div>
       </div>

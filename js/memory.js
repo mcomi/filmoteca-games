@@ -1,5 +1,5 @@
 let datosApi;
-const url = "https://tinyurl.com/yanf76s7/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
+const url = "http://132.247.164.46:8096/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
   fetch(url + "api/images")
@@ -82,12 +82,12 @@ function generateCardsHtml(arrImagenes) {
   cards = [...card];
   // @description shuffles cards when page is refreshed / loads
   // loop to add event listeners to each card
-  startGame();
   for (var i = 0; i < cards.length; i++) {
     card = cards[i];
     card.addEventListener("click", displayCard);
     card.addEventListener("click", cardOpen);
   }
+  startGame();
 }
 
 const infoModal = document.getElementById("info-modal");
@@ -145,6 +145,7 @@ function shuffle(array) {
 // @description function to start a new play
 function startGame() {
   // empty the openCards array
+  interval && interval.pause();
   openedCards = [];
 
   // shuffle deck
@@ -169,9 +170,9 @@ function startGame() {
   second = 0;
   minute = 0;
   hour = 0;
-  var timer = document.querySelector(".timer");
-  timer.innerHTML = "0 mins 0 secs";
-  clearInterval(interval);
+  timer = document.querySelector(".timer");
+  timer.innerHTML = minute + "mins " + second + "segs";
+  interval;
   document.getElementById("loader").style.display = "none";
 }
 
@@ -210,7 +211,6 @@ function matched() {
   openedCards[0].classList.remove("no-event");
   openedCards[1].classList.remove("no-event");
   openedCards = [];
-  congratulations();
 }
 
 // description when cards don't match
@@ -275,10 +275,12 @@ var second = 0,
   minute = 0;
 hour = 0;
 var timer = document.querySelector(".timer");
+timer.innerHTML = minute + "mins " + second + "segs";
 var interval;
 function startTimer() {
+  clearInterval(interval);
   interval = new IntervalTimer(function () {
-    timer.innerHTML = minute + "mins " + second + "secs";
+    timer.innerHTML = minute + "mins " + second + "segs";
     second++;
     if (second == 60) {
       minute++;
@@ -418,6 +420,7 @@ function closeInfoModal() {
   closeIconInfo.addEventListener("click", function (e) {
     infoModal.classList.remove("show");
     interval.resume();
+    congratulations();
   });
 }
 
@@ -440,6 +443,8 @@ function submitResult() {
     moves,
     convertToSeconds(hour, minute, second)
   );
+  const infoSubmitResult = document.getElementById("loading-result");
+  infoSubmitResult.style.display = "block";
   const data = JSON.stringify(result);
   fetch(url + "api/results/", {
     method: "POST",
@@ -449,7 +454,14 @@ function submitResult() {
     },
   })
     .then((res) => res.json())
-    .then((res) => getResults());
+    .then(() => {
+      infoSubmitResult.style.display = "none";
+      getResults();
+    })
+    .catch((err) => {
+      document.getElementById("error-message").innerHTML =
+        "Ocurrió un error, intente de nuevo";
+    });
 }
 
 function getResults() {

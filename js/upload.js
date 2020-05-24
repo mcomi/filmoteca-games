@@ -1,7 +1,8 @@
 // select file input
 const image = document.getElementById("imagen");
 const description = document.getElementById("description");
-const btn = document.getElementById("uploadBtn");
+const btn = document.getElementById("upload-btn");
+const loader = document.getElementById("loader");
 
 const uploadFile = (e) => {
   e.preventDefault();
@@ -18,18 +19,25 @@ const uploadFile = (e) => {
     return;
   }
 
+  loader.style.display = "block";
+  btn.disabled = true;
   // add file to FormData object
   const fd = new FormData();
   fd.append("imagen", file);
   fd.append("description", description.value);
 
   // send `POST` request http://132.247.164.46:8096/ http://localhost:8080
-  fetch("https://tinyurl.com/yanf76s7/api/images", {
+  fetch("http://localhost:8080/api/images", {
     method: "POST",
     body: fd,
   })
     .then((res) => res.json())
-    .then((json) => toastr.success(json.message))
+    .then((json) => {
+      toastr.success("Se cargó con éxito");
+      loader.style.display = "none";
+      clearForm();
+      btn.disabled = false;
+    })
     .catch((err) => toastr.error("Ocurrió un error, intenta de nuevo"));
 };
 

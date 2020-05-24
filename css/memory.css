@@ -1,3 +1,37 @@
+@font-face {
+  font-family: "Metropolis";
+  src: url("../fonts/Webfonts/EOT/Metropolis-Regular.eot"); /* IE9 Compat Modes */
+  src: url("../fonts/Webfonts/EOT/Metropolis-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/Webfonts/WOFF2/Metropolis-Regular.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../fonts/Webfonts/WOFF/Metropolis-Regular.woff") format("woff"); /* Pretty Modern Browsers */
+}
+
+@font-face {
+  font-family: "Metropolis-light";
+  src: url("../fonts/Webfonts/EOT/Metropolis-Light.eot"); /* IE9 Compat Modes */
+  src: url("../fonts/Webfonts/EOT/Metropolis-Light.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/Webfonts/WOFF2/Metropolis-Light.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../fonts/Webfonts/WOFF/Metropolis-Light.woff") format("woff"); /* Pretty Modern Browsers */
+}
+
+@font-face {
+  font-family: "Metropolis";
+  src: url("../fonts/Webfonts/EOT/Metropolis-Bold.eot"); /* IE9 Compat Modes */
+  src: url("../fonts/Webfonts/EOT/Metropolis-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    /* IE6-IE8 */ url("../fonts/Webfonts/WOFF2/Metropolis-Bold.woff2")
+      format("woff2"),
+    /* Super Modern Browsers */
+      url("../fonts/Webfonts/WOFF/Metropolis-Bold.woff") format("woff"); /* Pretty Modern Browsers */
+  font-weight: bold;
+}
+
 html {
   box-sizing: border-box;
 }
@@ -18,7 +52,7 @@ body {
 
 body {
   background: #ffffff;
-  font-family: "Permanent Marker", cursive;
+  font-family: "Metropolis", Fallback, sans-serif;
   font-size: 16px;
 }
 
@@ -30,7 +64,8 @@ body {
 }
 
 h1 {
-  font-family: "Gloria Hallelujah", cursive;
+  font-family: "Metropolis", Fallback, sans-serif;
+  font-weight: bold;
 }
 
 /*
@@ -38,7 +73,7 @@ h1 {
  */
 
 .deck {
-  width: 85%;
+  width: 90%;
   background: #716f71;
   padding: 1rem;
   border-radius: 4px;
@@ -51,8 +86,8 @@ h1 {
 }
 
 .deck .card {
-  height: 3.7rem;
-  width: 3.7rem;
+  height: 5rem;
+  width: 5rem;
   margin: 0.2rem 0.2rem;
   cursor: pointer;
   display: flex;
@@ -224,13 +259,15 @@ h1 {
   width: 85%;
   position: relative;
   transition: all 5s ease-in-out;
-  font-family: "Gloria Hallelujah", cursive;
+  font-family: "Metropolis-light", Fallback, sans-serif;
 }
 
 .popup h2 {
   margin-top: 0;
   color: #333;
-  font-family: Tahoma, Arial, sans-serif;
+  font-family: "Metropolis", Fallback, sans-serif;
+  font-weight: bold;
+  text-align: center;
 }
 .overlay.show {
   visibility: visible !important;
@@ -275,11 +312,13 @@ h1 {
 }
 
 .content-info {
-  font-family: sans-serif;
+  font-family: "Metropolis-light", Fallback, sans-serif;
   line-height: 1.5rem;
-  font-size: 1.2rem;
+  font-size: 1rem;
   text-align: left;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
+  max-height: 460px;
+  overflow-y: auto;
 }
 
 .btn {
@@ -289,7 +328,8 @@ h1 {
   display: block;
   margin: 0 auto;
   width: 50%;
-  font-family: "Gloria Hallelujah", cursive;
+  font-family: "Metropolis", Fallback, sans-serif;
+  font-weight: bold;
   color: #ffffff;
   border-radius: 5px;
 }
@@ -530,6 +570,39 @@ select {
   }
 }
 
+.lds-hourglass {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 16px solid #fff;
+  border-color: #e2043b transparent #e2043b transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
 /****** Media queries
 ***************************/
 @media (max-width: 420px) {
@@ -573,6 +646,13 @@ select {
   .popup {
     width: 60%;
   }
+  .content-info {
+    line-height: 2rem;
+    font-size: 1.2rem;
+    padding: 1rem 2rem;
+    max-height: 500px;
+    overflow-y: auto;
+  }
 }
 
 .mb-2 {
@@ -580,7 +660,7 @@ select {
 }
 
 table {
-  font-family: "Open Sans", sans-serif;
+  font-family: "Metropolis", Fallback, sans-serif;
   font-size: 1rem;
   line-height: 1.25;
   border: 1px solid #ccc;
