@@ -74,10 +74,10 @@ h1 {
 
 .deck {
   width: 90%;
-  background: #716f71;
+  background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
   padding: 1rem;
-  border-radius: 4px;
-  box-shadow: 8px 9px 26px 0 rgba(46, 61, 73, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -86,22 +86,22 @@ h1 {
 }
 
 .deck .card {
-  height: 5rem;
-  width: 5rem;
-  margin: 0.2rem 0.2rem;
+  height: 75px;
+  width: 75px;
+  margin: 0.5rem 0.2rem;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  perspective: 200px;
+  perspective: 400px;
 }
 
 .content {
   position: absolute;
   width: 100%;
   height: 100%;
-  transition: transform 1s;
-  transition: -webkit-transform 1s;
+  transition: transform 0.8s;
+  transition: -webkit-transform 0.8s;
   transform-style: preserve-3d;
   -webkit-transform-style: preserve-3d;
 }
@@ -119,12 +119,12 @@ h1 {
   position: absolute;
   text-align: center;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 10px;
   box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
 .card .back {
-  background: #141214;
+  background: #2e3d49;
   color: #ffffff;
 }
 
@@ -150,8 +150,8 @@ h1 {
 .deck .card.open .content {
   -webkit-transform: rotateY(180deg);
   transform: rotateY(180deg);
-  transition: transform 0.5s;
-  transition: -webkit-transform 0.5s;
+  transition: transform 0.6s;
+  transition: -webkit-transform 0.6s;
 }
 
 .deck .card.match .content {
@@ -161,7 +161,7 @@ h1 {
   animation-name: rubberBand;
   -webkit-backface-visibility: hidden !important;
   backface-visibility: hidden !important;
-  animation-duration: 0.75s;
+  animation-duration: 0.6s;
 }
 
 .deck .card.match .content .front {
@@ -181,7 +181,7 @@ h1 {
   animation-name: pulse;
   -webkit-backface-visibility: visible !important;
   backface-visibility: visible !important;
-  animation-duration: 0.75s;
+  animation-duration: 0.3s;
   background: rgba(226, 4, 59, 1);
   border: 1px solid #e2043b;
 }
@@ -252,13 +252,13 @@ h1 {
 }
 
 .popup {
-  margin: 70px auto;
+  margin: 35px auto;
   padding: 20px;
   background: #ffffff;
   border-radius: 5px;
   width: 85%;
   position: relative;
-  transition: all 5s ease-in-out;
+  transition: all 3s ease-in-out;
   font-family: "Metropolis-light", Fallback, sans-serif;
 }
 
@@ -311,6 +311,10 @@ h1 {
   display: inline-block;
 }
 
+.text-center {
+  text-align: center;
+}
+
 .content-info {
   font-family: "Metropolis-light", Fallback, sans-serif;
   line-height: 1.5rem;
@@ -335,6 +339,24 @@ h1 {
 }
 .btn:disabled {
   background-color: rgba(20, 18, 20, 0.5);
+}
+
+.btn-leaders {
+  padding: 0.3rem 0.5rem;
+  font-size: 1.1rem;
+  display: inline-block;
+  margin: 0;
+  width: 200px;
+  border: 1px solid #fff;
+}
+
+.btn-leaders.active {
+  background: #02ccba;
+  border: 1px solid #333;
+}
+
+.btn:focus {
+  outline: 0;
 }
 
 .css-input {
@@ -562,7 +584,7 @@ select {
   }
 
   50% {
-    transform: scale3d(1.2, 1.2, 1.2);
+    transform: scale3d(1.1, 1.1, 1.1);
   }
 
   to {
@@ -608,9 +630,12 @@ select {
 @media (max-width: 420px) {
   .deck .card .back img {
     position: relative;
-    width: 33px;
+    width: 50px;
     height: auto;
-    top: 9%;
+    top: 25%;
+  }
+  .card {
+    margin: 1rem 0.3rem !important;
   }
 }
 
@@ -634,8 +659,8 @@ select {
   }
 
   .deck {
-    width: 46vw;
-    height: 90vh;
+    width: 600px;
+    min-height: 90vh;
   }
 
   .deck .card {
@@ -660,7 +685,7 @@ select {
 }
 
 table {
-  font-family: "Metropolis", Fallback, sans-serif;
+  font-family: "Metropolis-light", Fallback, sans-serif;
   font-size: 1rem;
   line-height: 1.25;
   border: 1px solid #ccc;
@@ -677,7 +702,7 @@ table caption {
 }
 
 table tr {
-  background-color: #f8f8f8;
+  background-color: #fff;
   border: 1px solid #ddd;
   padding: 0.35em;
 }
@@ -692,6 +717,11 @@ table th {
   font-size: 0.85em;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.t-header {
+  font-family: "Metropolis", Fallback, sans-serif;
+  font-weight: bold;
 }
 
 @media screen and (max-width: 600px) {
@@ -721,7 +751,9 @@ table th {
   table tr {
     border-bottom: 3px solid #ddd;
     display: block;
-    margin-bottom: 0.625em;
+    border-radius: 10px;
+    margin: 0 0.4rem 0.825em 0.4rem;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   }
 
   table td {
@@ -744,5 +776,14 @@ table th {
 
   table td:last-child {
     border-bottom: 0;
+  }
+  .t-header {
+    display: none;
+  }
+  .btn {
+    width: 70%;
+  }
+  .css-input {
+    width: 90%;
   }
 }

@@ -1,5 +1,5 @@
 let datosApi;
-const url = "http://132.247.164.46:8096/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
+const url = "http://localhost:8080/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
   fetch(url + "api/images")
@@ -11,6 +11,9 @@ function getImagesFromApi() {
         return;
       }
       generateCardsHtml(datosApi);
+    })
+    .catch((err) => {
+      alert("ocurrió un error al cargar");
     });
 }
 
@@ -188,6 +191,7 @@ function cardOpen() {
   openedCards.push(this);
   var len = openedCards.length;
   if (len === 2) {
+    disable();
     moveCounter();
     if (openedCards[0].type === openedCards[1].type) {
       var type = openedCards[0].type;
@@ -211,6 +215,7 @@ function matched() {
   openedCards[0].classList.remove("no-event");
   openedCards[1].classList.remove("no-event");
   openedCards = [];
+  enable();
 }
 
 // description when cards don't match
@@ -390,7 +395,6 @@ function congratulations() {
   if (matchedCard.length == 16) {
     interval.pause();
     finalTime = timer.innerHTML;
-    console.log(hour, minute, second);
     // show congratulations modal
     modal.classList.add("show");
 
@@ -404,6 +408,10 @@ function congratulations() {
 
     //closeicon on modal
     closeModal();
+  } else {
+    setTimeout(function () {
+      interval.resume();
+    }, 500);
   }
 }
 
@@ -419,7 +427,6 @@ const closeIconInfo = document.querySelector(".close-icon");
 function closeInfoModal() {
   closeIconInfo.addEventListener("click", function (e) {
     infoModal.classList.remove("show");
-    interval.resume();
     congratulations();
   });
 }
@@ -459,36 +466,80 @@ function submitResult() {
       getResults();
     })
     .catch((err) => {
+      infoSubmitResult.style.display = "block";
       document.getElementById("error-message").innerHTML =
         "Ocurrió un error, intente de nuevo";
     });
 }
 
-function getResults() {
-  fetch(url + "api/results")
+function getResults(mexicoResults) {
+  document.getElementById("loading-leaderboard").style.display = "block";
+  fetch(`${url}api/results${mexicoResults ? "?country=MEX" : ""}`)
     .then((res) => res.json())
-    .then((res) => loadResults(res.data));
+    .then((res) => loadResults(res.data, mexicoResults))
+    .catch((err) => {
+      document.getElementById("loading-leaderboard").style.display = "none";
+    });
 }
 
 const gameContainer = document.getElementById("game-container");
 const resultsContainer = document.getElementById("results-table");
 const resultsHtml = document.getElementById("results");
-function loadResults(resultados) {
+function loadResults(resultados, mexicoResults) {
+  if (mexicoResults) {
+    const theader = document.getElementById("t-header");
+    const headerHTML = `<th scope="col">Lugar</th>
+    <th scope="col">País</th>
+    <th scope="col">Estado</th>
+    <th scope="col">Seudónimo</th>
+    <th scope="col">Intentos</th>
+    <th scope="col">Tiempo</th>`;
+    theader.innerHTML = headerHTML;
+  } else {
+    const theader = document.getElementById("t-header");
+    const headerHTML = `<th scope="col">Lugar</th>
+    <th scope="col">País</th>
+    <th scope="col">Seudónimo</th>
+    <th scope="col">Intentos</th>
+    <th scope="col">Tiempo</th>`;
+    theader.innerHTML = headerHTML;
+  }
   const htmlResultados = resultados
     .map((item, index) => {
       return `<tr>
    <td data-label="Lugar">${index + 1}</td>
    <td data-label="País" class="f32"><span class="flag ${item.pais.toLowerCase()}"></span></td>
-   <script>
-   </script>
+   ${
+     item.pais === "MEX" && mexicoResults
+       ? `<td data-label="Seudónimo">${item.estado_mex}</td>`
+       : ""
+   }
    <td data-label="Seudónimo">${item.seudonimo}</td>
    <td data-label="Intentos">${item.clicks}</td>
    <td data-label="Tiempo">${formatTime(item.tiempoSec)}</td>`;
     })
     .join("");
+  document.getElementById("loading-leaderboard").style.display = "none";
   gameContainer.classList.add("hidden");
   resultsContainer.classList.remove("hidden");
   resultsHtml.innerHTML = htmlResultados;
+}
+
+const btnLeader = document.querySelectorAll(".btn-leaders");
+
+[].forEach.call(btnLeader, (el) => {
+  el.addEventListener("click", btnClick, false);
+});
+
+function btnClick() {
+  // use Array function for lexical this
+  [].forEach.call(btnLeader, (el) => {
+    // except for the element clicked, remove active class
+    if (el !== this) el.classList.remove("active");
+  });
+
+  // toggle active on the clicked button
+  this.classList.contains("active") ? "" : this.classList.toggle("active");
 }
 
 function Result(seudonimo, pais, estado_mex, clicks, tiempoSec) {

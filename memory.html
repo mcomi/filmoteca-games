@@ -590,8 +590,8 @@
             <button id="submit-results" class="btn" disabled>
               Enviar y ver resultados
             </button>
-            <span id="error-message"> </span>
-            <div class="form-group" id="info-container" style="display: none;">
+            <span id="error-message" class="error-message text-center"> </span>
+            <div class="text-center" id="loading-result" style="display: none;">
               <div class="lds-hourglass"></div>
               Espere un momento
             </div>
@@ -604,8 +604,23 @@
         <thead>
           <caption>
             Tabla de Clasificación
+            <br />
+            <button class="btn btn-leaders active" onclick="getResults()">
+              Mundial 🌎
+            </button>
+            <button class="btn btn-leaders" onclick="getResults(true)">
+              México 🇲🇽
+            </button>
+            <div
+              class="text-center"
+              id="loading-leaderboard"
+              style="display: none;"
+            >
+              <div class="lds-hourglass"></div>
+              Cargando
+            </div>
           </caption>
-          <tr>
+          <tr id="t-header" class="t-header">
             <th scope="col">Lugar</th>
             <th scope="col">País</th>
             <th scope="col">Seudónimo</th>
