@@ -1,5 +1,5 @@
 let datosApi;
-const url = "http://localhost:8080/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
+const url = "http://132.247.164.46:8096/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
   fetch(url + "api/images")
@@ -552,7 +552,8 @@ function Result(seudonimo, pais, estado_mex, clicks, tiempoSec) {
 }
 
 function convertToSeconds(hours = 0, minutes, seconds) {
-  return hours * 3600 + minutes * 60 + seconds;
+  const secs = seconds - 1;
+  return hours * 3600 + minutes * 60 + secs;
 }
 
 function formatTime(timestamp) {
