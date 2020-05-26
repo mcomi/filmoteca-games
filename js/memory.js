@@ -1,5 +1,5 @@
 let datosApi;
-const url = "http://132.247.164.46:8096/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
+const url = "http://localhost:8080/"; //http://132.247.164.46:8096/"; //url+"   http://localhost:8080/
 // get images from api
 function getImagesFromApi() {
   fetch(url + "api/images")
@@ -365,26 +365,12 @@ countrySelect.addEventListener("change", function () {
   if (this.value === "MEX") {
     estadosSelect.classList.remove("hidden");
   } else {
+    estadosSelect.classList.add("hidden");
     validateForm();
   }
 });
 
 estadosSelect.addEventListener("change", validateForm);
-
-// search for pseudonim in db
-inputNickname.addEventListener("focusout", function () {
-  const nickname = this.value;
-  fetch(`${url}api/results/${nickname}`)
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.data) {
-        document.getElementById("error-message").innerHTML =
-          "Este seudónimo ya está en uso, intenta con otro";
-      } else {
-        document.getElementById("error-message").innerHTML = "";
-      }
-    });
-});
 
 btnSendResults.addEventListener("click", function () {
   this.disabled = true;
@@ -442,18 +428,22 @@ function playAgain() {
   getImagesFromApi();
 }
 
-function submitResult() {
-  const result = new Result(
-    inputNickname.value,
-    countrySelect.value,
-    estadosSelect.value,
-    moves,
-    convertToSeconds(hour, minute, second)
-  );
-  const infoSubmitResult = document.getElementById("loading-result");
-  infoSubmitResult.style.display = "block";
+let result;
+
+const loaderSubmit = document.getElementById("loading-result");
+function submitResult(overwrite = false) {
+  if (!result) {
+    result = new Result(
+      inputNickname.value,
+      countrySelect.value,
+      estadosSelect.value,
+      moves,
+      convertToSeconds(hour, minute, second)
+    );
+  }
+  loaderSubmit.style.display = "block";
   const data = JSON.stringify(result);
-  fetch(url + "api/results/", {
+  fetch(url + `api/results?overwrite=${overwrite}`, {
     method: "POST",
     body: data,
     headers: {
@@ -461,15 +451,68 @@ function submitResult() {
     },
   })
     .then((res) => res.json())
-    .then(() => {
-      infoSubmitResult.style.display = "none";
-      getResults();
+    .then((json) => {
+      if (json.data.order_rank) {
+        console.log("TRaigo el ranking");
+        resetModals();
+        getResults();
+        informResults();
+      } else {
+        loaderSubmit.style.display = "none";
+        askOverrideResult({ ...json.data });
+      }
     })
     .catch((err) => {
-      infoSubmitResult.style.display = "block";
+      loaderSubmit.style.display = "none";
       document.getElementById("error-message").innerHTML =
         "Ocurrió un error, intente de nuevo";
     });
+}
+
+function informResults() {
+  console.log("TODO ranking");
+}
+
+const overrideScore = document.getElementById("override-score");
+function askOverrideResult({ seudonimo, pais, estado_mex, clicks, tiempoSec }) {
+  submitForm.classList.add("hidden");
+  const htmlPreviousResult = `<p>
+    Encontramos un record previo con estos datos: <br/>
+    ${seudonimo} 
+    <span class="f32"><span class="flag ${pais.toLowerCase()} inline"> </span></span>
+    ${estado_mex ? estado_mex : ""}
+    </br>
+    ${clicks} intentos en ${formatTime(tiempoSec)}
+    </p>
+    <button onclick="submitResult(true)" class="btn">
+        Actualizar mi score 🏆
+    </button>
+    <button onclick="changeDataToSubmit()" class="btn">
+        Modificar mi seudónimo ✎
+    </button>`;
+  overrideScore.innerHTML = htmlPreviousResult;
+  overrideScore.classList.remove("hidden");
+}
+
+function changeDataToSubmit() {
+  inputNickname.value = "";
+  countrySelect.value = "";
+  estadosSelect.value = "";
+  result = null;
+  submitForm.classList.remove("hidden");
+  overrideScore.classList.add("hidden");
+}
+
+function resetModals() {
+  document.getElementById("error-message").innerHTML = "";
+  loaderSubmit.style.display = "none";
+  inputNickname.value = "";
+  countrySelect.value = "";
+  estadosSelect.value = "";
+  winDialog.classList.remove("hidden");
+  submitForm.classList.add("hidden");
+  overrideScore.classList.add("hidden");
+  result = null;
 }
 
 function getResults(mexicoResults) {
