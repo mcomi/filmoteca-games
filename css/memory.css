@@ -230,6 +230,16 @@ h1 {
   margin: 0 1rem;
 }
 
+.results-play-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-bottom: 0 !important;
+  border-radius: 0;
+  width: 100%;
+}
+
 /*
  * Styles for congratulations modal
  */
@@ -654,6 +664,14 @@ select {
   }
 }
 
+@media screen and (max-device-height: 811px) {
+  .deck .card {
+    height: 70px;
+    width: 70px;
+    margin: 1rem 0.2rem !important;
+  }
+}
+
 /* For Tablets and larger screens
 ****************/
 
@@ -789,5 +807,52 @@ table th {
   }
   .css-input {
     width: 90%;
+  }
+}
+
+/* ----------- iPhone 6+, 7+ and 8+ ----------- */
+
+/* Portrait and Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .deck .card {
+    height: 70px;
+    width: 70px;
+    margin: 1rem 0.2rem !important;
+  }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: landscape) {
+  .deck {
+    width: 60%;
+  }
+  .deck .card {
+    height: 70px;
+    width: 70px;
+    margin: 0.2rem 0.2rem !important;
+  }
+  .card .back img {
+    position: relative;
+    width: 40px;
+    height: auto;
+    top: 30%;
+  }
+}
+
+/* Landscape */
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (orientation: landscape) {
+  .deck {
+    width: 60%;
+  }
+  .deck .card {
+    height: 80px;
+    width: 80px;
+    margin: 0.2rem 0.2rem !important;
+  }
+  .card .back img {
+    position: relative;
+    width: 40px;
+    height: auto;
+    top: 30%;
   }
 }
