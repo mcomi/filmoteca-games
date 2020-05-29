@@ -391,10 +391,11 @@
       submitResult();
     });
 
+    let finalTime;
     function congratulations() {
       if (matchedCard.length == 16) {
         interval.pause();
-        let finalTime = timer.innerHTML;
+        finalTime = timer.innerHTML;
         // show congratulations modal
         modal.classList.add("show");
 
@@ -497,13 +498,17 @@
     }) {
       submitForm.classList.add("hidden");
       const htmlPreviousResult = `<p>
-    Encontramos un record previo con estos datos: <br/>
+    Encontramos un score previo con estos datos: <br/>
     ${seudonimo} 
-    <span class="f32"><span class="flag ${pais.toLowerCase()} inline"> </span></span>
+    <span class="f32"><span class="flag ${pais.toLowerCase()} inline"></span></span>
     ${estado_mex ? estado_mex : ""}
-    </br>
+    </p>
+    <p class="p-bold">Score registrado</p>
+    <p>
     ${clicks} intentos en ${formatTime(tiempoSec)}
     </p>
+    <p class="p-bold">Score partida actual </p> 
+    <p> ${finalTime} </p>
     <button id="btn-update-score" class="btn">
         Actualizar mi score 🏆
     </button>
@@ -572,8 +577,8 @@
     const resultsContainer = document.getElementById("results-table");
     const resultsHtml = document.getElementById("results");
     function loadResults(resultados, mexicoResults) {
+      const theader = document.getElementById("t-header");
       if (mexicoResults) {
-        const theader = document.getElementById("t-header");
         const headerHTML = `<th scope="col">Lugar</th>
     <th scope="col">País</th>
     <th scope="col">Estado</th>
@@ -582,7 +587,6 @@
     <th scope="col">Tiempo</th>`;
         theader.innerHTML = headerHTML;
       } else {
-        const theader = document.getElementById("t-header");
         const headerHTML = `<th scope="col">Lugar</th>
     <th scope="col">País</th>
     <th scope="col">Seudónimo</th>
@@ -597,7 +601,7 @@
    <td data-label="País" class="f32"><span class="flag ${item.pais.toLowerCase()}"></span></td>
    ${
      item.pais === "MEX" && mexicoResults
-       ? `<td data-label="Seudónimo">${item.estado_mex}</td>`
+       ? `<td data-label="Estado">${item.estado_mex}</td>`
        : ""
    }
    <td data-label="Seudónimo">${item.seudonimo}</td>
