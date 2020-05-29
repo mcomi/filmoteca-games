@@ -27,7 +27,7 @@
       }, 1000);
     }
 
-    const prod = false;
+    const prod = true;
     const url = prod ? "http://132.247.164.46:8096/" : "http://localhost:8080/";
     // get images from api
     function getImagesFromApi() {
@@ -508,7 +508,7 @@
     ${clicks} intentos en ${formatTime(tiempoSec)}
     </p>
     <p class="p-bold">Score partida actual </p> 
-    <p> ${finalTime} </p>
+    <p>  ${moves} intentos en ${finalTime} </p>
     <button id="btn-update-score" class="btn">
         Actualizar mi score 🏆
     </button>
