@@ -683,6 +683,18 @@ select {
   }
 }
 
+/* Portrait */
+@media screen and (device-width: 360px) and (orientation: portrait) {
+  .deck .card {
+    height: 62px;
+    width: 62px;
+    margin: 0.8rem 0.1rem !important;
+  }
+  .deck .card .back img {
+    width: 36px;
+  }
+}
+
 @media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (device-aspect-ratio: 40/71) and (orientation: portrait) {
   .deck {
     width: 95%;

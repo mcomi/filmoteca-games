@@ -28,7 +28,9 @@
     }
 
     const prod = true;
-    const url = prod ? "http://132.247.164.46:8096/" : "http://localhost:8080/";
+    const url = prod
+      ? "https://backgame.filmoteca.unam.mx/"
+      : "http://localhost:8080/";
     // get images from api
     function getImagesFromApi() {
       fetch(url + "api/images")
