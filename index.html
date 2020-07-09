@@ -1,15 +1,750 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Filmoteca - Juegos</title>
+    <meta charset="utf-8" />
+    <title>Filmorama - Filmoteca UNAM</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, height=device-height, initial-scale=1.0"
+    />
+    <link
+      rel="stylesheet prefetch"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css"
+    />
+
+    <link rel="stylesheet" href="css/memory.css" />
+    <link rel="stylesheet" href="css/flags32-iso-3166-1-alpha-3.css" />
+    <link
+      rel="icon"
+      href="https://www.filmoteca.unam.mx/wp-content/uploads/2019/03/cropped-filmoteca-logo-rojo-32x32.png"
+      sizes="32x32"
+    />
+    <link
+      rel="icon"
+      href="https://www.filmoteca.unam.mx/wp-content/uploads/2019/03/cropped-filmoteca-logo-rojo-192x192.png"
+      sizes="192x192"
+    />
+    <link
+      rel="apple-touch-icon-precomposed"
+      href="https://www.filmoteca.unam.mx/wp-content/uploads/2019/03/cropped-filmoteca-logo-rojo-180x180.png"
+    />
+    <meta
+      name="msapplication-TileImage"
+      content="https://www.filmoteca.unam.mx/wp-content/uploads/2019/03/cropped-filmoteca-logo-rojo-270x270.png"
+    />
   </head>
   <body>
-    <section>
-      <h2>Juegos de memoria</h2>
-      <a href="upload.html">Subir imágenes</a>
-      <a href="memory.html">Juego</a>
-    </section>
+    <div class="top-social">
+      <a href="https://twitter.com/filmotecaunam">
+        <i class="fa fa-twitter"></i>
+      </a>
+      <a href="https://www.facebook.com/FilmotecaUNAM">
+        <i class="fa fa-facebook"></i>
+      </a>
+      <a href="https://www.instagram.com/filmotecaunam/?hl=es-la">
+        <i class="fa fa-instagram"></i>
+      </a>
+      <a href="https://www.youtube.com/user/FilmotecaUNAM">
+        <i class="fa fa-youtube"></i>
+      </a>
+      <a href="https://www.flickr.com/photos/filmotecaunam/">
+        <i class="fa fa-flickr"></i>
+      </a>
+    </div>
+    <div class="topnav" id="myTopnav">
+      <div class="nav-container">
+        <a href="https://www.cultura.unam.mx/">
+          <img
+            src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoCulturaUNAM-blanco-e1580510792614.png"
+            alt=""
+            class="logo-top"
+          />
+        </a>
+        <a href="https://www.filmoteca.unam.mx/">Inicio</a>
+        <a href="https://www.filmoteca.unam.mx/">
+          <img
+            src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+            alt=""
+            class="logo-top"
+          />
+        </a>
+      </div>
+    </div>
+    <div class="pure-g">
+      <h1>Filmorama</h1>
+      <p>
+        Como parte de las celebraciones del 60 aniversario de la Filmoteca UNAM,
+        te invitamos a jugar y a aprender con este juego de memoria virtual, el
+        cual te mostrará la fotografía de ocho personajes del cine mexicano.
+      </p>
+      <h2>Instrucciones</h2>
+      <p>1. Da click sobre el primer par y empezará a correr el tiempo.</p>
+      <p>
+        2. Cada que encuentres un par, te aparecerá una reseña de la imagen, se
+        detendrá el tiempo y reanudará hasta que cierres el panel de
+        información.
+      </p>
+      <p>3. Menor número de intentos te colocarán en mejor posición.</p>
+      <p>
+        4. Al registrar tu score la relación <strong> seudónimo-país</strong> es
+        única. Si vuelves a poner los mismos datos te saldrá tu score previo, el
+        cuál podrás actualizar para mejorar tu posición en la tabla.
+      </p>
+      <p>5. Diviértete y ¡Mucha suerte!</p>
+    </div>
+    <div class="container top-buttons">
+      <a class="link" id="show-results">
+        <span> Ver Tabla de Clasificación </span> 🏆
+      </a>
+    </div>
+    <div class="container" id="game-container">
+      <section class="score-panel">
+        <ul class="stars">
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+          <li><i class="fa fa-star"></i></li>
+        </ul>
+
+        <span class="moves">0</span> Intento(s)
+
+        <div class="timer"></div>
+
+        <div class="restart play-again">
+          <i class="fa fa-repeat"></i>
+        </div>
+      </section>
+
+      <div class="loading" id="loader">Loading&#8230;</div>
+
+      <ul class="deck" id="card-deck">
+        <li class="card" type="amoresperros">
+          <div class="content">
+            <div class="front">
+              <img src="images/amoresperros.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="herodes">
+          <div class="content">
+            <div class="front">
+              <img src="images/herodes.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="huastecos">
+          <div class="content">
+            <div class="front">
+              <img src="images/huastecos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="macario">
+          <div class="content">
+            <div class="front">
+              <img src="images/macario.jpeg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="dinero">
+          <div class="content">
+            <div class="front">
+              <img src="images/necesitodinero.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card match" type="huastecos">
+          <div class="content">
+            <div class="front">
+              <img src="images/huastecos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="olvidados">
+          <div class="content">
+            <div class="front">
+              <img src="images/olvidados.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="amoresperros">
+          <div class="content">
+            <div class="front">
+              <img src="images/amoresperros.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vagabundos">
+          <div class="content">
+            <div class="front">
+              <img src="images/vagabundos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vertigo">
+          <div class="content">
+            <div class="front">
+              <img src="images/vertigo.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="olvidados">
+          <div class="content">
+            <div class="front">
+              <img src="images/olvidados.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vertigo">
+          <div class="content">
+            <div class="front">
+              <img src="images/vertigo.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card open show" type="macario">
+          <div class="content">
+            <div class="front">
+              <img src="images/macario.jpeg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="vagabundos">
+          <div class="content">
+            <div class="front">
+              <img src="images/vagabundos.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="herodes">
+          <div class="content">
+            <div class="front">
+              <img src="images/herodes.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+        <li class="card" type="dinero">
+          <div class="content">
+            <div class="front">
+              <img src="images/necesitodinero.jpg" alt="" />
+            </div>
+            <div class="back">
+              <img
+                src="https://www.filmoteca.unam.mx/wp-content/uploads/2020/01/LogoFilmoteca-60-blanco-e1580510160631.png"
+                alt=""
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+
+      <div id="popup1" class="overlay">
+        <div class="popup">
+          <div id="win-dialog">
+            <h2>Felicidades 🎉</h2>
+            <a class="close" href="#">×</a>
+            <div class="content-1">
+              ¡Eres un ganador! 🎉🎉
+            </div>
+            <div class="content-2">
+              <p>
+                Hiciste <span id="finalMove" class="p-bold"> </span> intentos
+              </p>
+              <p>en <span id="totalTime" class="p-bold"> </span></p>
+              <p>Rating: <span id="starRating"></span></p>
+              <small
+                >Puedes registrar tu score para conocer que tal te fue respecto
+                a otros participantes de México y del mundo.
+              </small>
+            </div>
+            <button id="submit-score" class="btn">
+              Compite 🏆
+            </button>
+            <button id="play-again" class="btn play-again">
+              Jugar de nuevo 😄
+            </button>
+          </div>
+          <div id="form-submit" class="hidden">
+            <input
+              id="nickname"
+              type="text"
+              class="css-input"
+              placeholder="Escribe tu seudónimo"
+            />
+            <select name="country" class="css-input" id="country">
+              <option value="">Selecciona tu país</option>
+              <option value="AFG">Afghanistan</option>
+              <option value="ALA">Åland Islands</option>
+              <option value="ALB">Albania</option>
+              <option value="DZA">Algeria</option>
+              <option value="ASM">American Samoa</option>
+              <option value="AND">Andorra</option>
+              <option value="AGO">Angola</option>
+              <option value="AIA">Anguilla</option>
+              <option value="ATA">Antarctica</option>
+              <option value="ATG">Antigua and Barbuda</option>
+              <option value="ARG">Argentina</option>
+              <option value="ARM">Armenia</option>
+              <option value="ABW">Aruba</option>
+              <option value="AUS">Australia</option>
+              <option value="AUT">Austria</option>
+              <option value="AZE">Azerbaijan</option>
+              <option value="BHS">Bahamas</option>
+              <option value="BHR">Bahrain</option>
+              <option value="BGD">Bangladesh</option>
+              <option value="BRB">Barbados</option>
+              <option value="BLR">Belarus</option>
+              <option value="BEL">Belgium</option>
+              <option value="BLZ">Belize</option>
+              <option value="BEN">Benin</option>
+              <option value="BMU">Bermuda</option>
+              <option value="BTN">Bhutan</option>
+              <option value="BOL">Bolivia, Plurinational State of</option>
+              <option value="BES">Bonaire, Sint Eustatius and Saba</option>
+              <option value="BIH">Bosnia and Herzegovina</option>
+              <option value="BWA">Botswana</option>
+              <option value="BVT">Bouvet Island</option>
+              <option value="BRA">Brazil</option>
+              <option value="IOT">British Indian Ocean Territory</option>
+              <option value="BRN">Brunei Darussalam</option>
+              <option value="BGR">Bulgaria</option>
+              <option value="BFA">Burkina Faso</option>
+              <option value="BDI">Burundi</option>
+              <option value="KHM">Cambodia</option>
+              <option value="CMR">Cameroon</option>
+              <option value="CAN">Canada</option>
+              <option value="CPV">Cape Verde</option>
+              <option value="CYM">Cayman Islands</option>
+              <option value="CAF">Central African Republic</option>
+              <option value="TCD">Chad</option>
+              <option value="CHL">Chile</option>
+              <option value="CHN">China</option>
+              <option value="CXR">Christmas Island</option>
+              <option value="CCK">Cocos (Keeling) Islands</option>
+              <option value="COL">Colombia</option>
+              <option value="COM">Comoros</option>
+              <option value="COG">Congo</option>
+              <option value="COD">Congo, the Democratic Republic of the</option>
+              <option value="COK">Cook Islands</option>
+              <option value="CRI">Costa Rica</option>
+              <option value="CIV">Côte d'Ivoire</option>
+              <option value="HRV">Croatia</option>
+              <option value="CUB">Cuba</option>
+              <option value="CUW">Curaçao</option>
+              <option value="CYP">Cyprus</option>
+              <option value="CZE">Czech Republic</option>
+              <option value="DNK">Denmark</option>
+              <option value="DJI">Djibouti</option>
+              <option value="DMA">Dominica</option>
+              <option value="DOM">Dominican Republic</option>
+              <option value="ECU">Ecuador</option>
+              <option value="EGY">Egypt</option>
+              <option value="SLV">El Salvador</option>
+              <option value="GNQ">Equatorial Guinea</option>
+              <option value="ERI">Eritrea</option>
+              <option value="EST">Estonia</option>
+              <option value="ETH">Ethiopia</option>
+              <option value="FLK">Falkland Islands (Malvinas)</option>
+              <option value="FRO">Faroe Islands</option>
+              <option value="FJI">Fiji</option>
+              <option value="FIN">Finland</option>
+              <option value="FRA">France</option>
+              <option value="GUF">French Guiana</option>
+              <option value="PYF">French Polynesia</option>
+              <option value="ATF">French Southern Territories</option>
+              <option value="GAB">Gabon</option>
+              <option value="GMB">Gambia</option>
+              <option value="GEO">Georgia</option>
+              <option value="DEU">Germany</option>
+              <option value="GHA">Ghana</option>
+              <option value="GIB">Gibraltar</option>
+              <option value="GRC">Greece</option>
+              <option value="GRL">Greenland</option>
+              <option value="GRD">Grenada</option>
+              <option value="GLP">Guadeloupe</option>
+              <option value="GUM">Guam</option>
+              <option value="GTM">Guatemala</option>
+              <option value="GGY">Guernsey</option>
+              <option value="GIN">Guinea</option>
+              <option value="GNB">Guinea-Bissau</option>
+              <option value="GUY">Guyana</option>
+              <option value="HTI">Haiti</option>
+              <option value="HMD">Heard Island and McDonald Islands</option>
+              <option value="VAT">Holy See (Vatican City State)</option>
+              <option value="HND">Honduras</option>
+              <option value="HKG">Hong Kong</option>
+              <option value="HUN">Hungary</option>
+              <option value="ISL">Iceland</option>
+              <option value="IND">India</option>
+              <option value="IDN">Indonesia</option>
+              <option value="IRN">Iran, Islamic Republic of</option>
+              <option value="IRQ">Iraq</option>
+              <option value="IRL">Ireland</option>
+              <option value="IMN">Isle of Man</option>
+              <option value="ISR">Israel</option>
+              <option value="ITA">Italy</option>
+              <option value="JAM">Jamaica</option>
+              <option value="JPN">Japan</option>
+              <option value="JEY">Jersey</option>
+              <option value="JOR">Jordan</option>
+              <option value="KAZ">Kazakhstan</option>
+              <option value="KEN">Kenya</option>
+              <option value="KIR">Kiribati</option>
+              <option value="PRK"
+                >Korea, Democratic People's Republic of</option
+              >
+              <option value="KOR">Korea, Republic of</option>
+              <option value="KWT">Kuwait</option>
+              <option value="KGZ">Kyrgyzstan</option>
+              <option value="LAO">Lao People's Democratic Republic</option>
+              <option value="LVA">Latvia</option>
+              <option value="LBN">Lebanon</option>
+              <option value="LSO">Lesotho</option>
+              <option value="LBR">Liberia</option>
+              <option value="LBY">Libya</option>
+              <option value="LIE">Liechtenstein</option>
+              <option value="LTU">Lithuania</option>
+              <option value="LUX">Luxembourg</option>
+              <option value="MAC">Macao</option>
+              <option value="MKD"
+                >Macedonia, the former Yugoslav Republic of</option
+              >
+              <option value="MDG">Madagascar</option>
+              <option value="MWI">Malawi</option>
+              <option value="MYS">Malaysia</option>
+              <option value="MDV">Maldives</option>
+              <option value="MLI">Mali</option>
+              <option value="MLT">Malta</option>
+              <option value="MHL">Marshall Islands</option>
+              <option value="MTQ">Martinique</option>
+              <option value="MRT">Mauritania</option>
+              <option value="MUS">Mauritius</option>
+              <option value="MYT">Mayotte</option>
+              <option value="MEX">Mexico</option>
+              <option value="FSM">Micronesia, Federated States of</option>
+              <option value="MDA">Moldova, Republic of</option>
+              <option value="MCO">Monaco</option>
+              <option value="MNG">Mongolia</option>
+              <option value="MNE">Montenegro</option>
+              <option value="MSR">Montserrat</option>
+              <option value="MAR">Morocco</option>
+              <option value="MOZ">Mozambique</option>
+              <option value="MMR">Myanmar</option>
+              <option value="NAM">Namibia</option>
+              <option value="NRU">Nauru</option>
+              <option value="NPL">Nepal</option>
+              <option value="NLD">Netherlands</option>
+              <option value="NCL">New Caledonia</option>
+              <option value="NZL">New Zealand</option>
+              <option value="NIC">Nicaragua</option>
+              <option value="NER">Niger</option>
+              <option value="NGA">Nigeria</option>
+              <option value="NIU">Niue</option>
+              <option value="NFK">Norfolk Island</option>
+              <option value="MNP">Northern Mariana Islands</option>
+              <option value="NOR">Norway</option>
+              <option value="OMN">Oman</option>
+              <option value="PAK">Pakistan</option>
+              <option value="PLW">Palau</option>
+              <option value="PSE">Palestinian Territory, Occupied</option>
+              <option value="PAN">Panama</option>
+              <option value="PNG">Papua New Guinea</option>
+              <option value="PRY">Paraguay</option>
+              <option value="PER">Peru</option>
+              <option value="PHL">Philippines</option>
+              <option value="PCN">Pitcairn</option>
+              <option value="POL">Poland</option>
+              <option value="PRT">Portugal</option>
+              <option value="PRI">Puerto Rico</option>
+              <option value="QAT">Qatar</option>
+              <option value="REU">Réunion</option>
+              <option value="ROU">Romania</option>
+              <option value="RUS">Russian Federation</option>
+              <option value="RWA">Rwanda</option>
+              <option value="BLM">Saint Barthélemy</option>
+              <option value="SHN"
+                >Saint Helena, Ascension and Tristan da Cunha</option
+              >
+              <option value="KNA">Saint Kitts and Nevis</option>
+              <option value="LCA">Saint Lucia</option>
+              <option value="MAF">Saint Martin (French part)</option>
+              <option value="SPM">Saint Pierre and Miquelon</option>
+              <option value="VCT">Saint Vincent and the Grenadines</option>
+              <option value="WSM">Samoa</option>
+              <option value="SMR">San Marino</option>
+              <option value="STP">Sao Tome and Principe</option>
+              <option value="SAU">Saudi Arabia</option>
+              <option value="SEN">Senegal</option>
+              <option value="SRB">Serbia</option>
+              <option value="SYC">Seychelles</option>
+              <option value="SLE">Sierra Leone</option>
+              <option value="SGP">Singapore</option>
+              <option value="SXM">Sint Maarten (Dutch part)</option>
+              <option value="SVK">Slovakia</option>
+              <option value="SVN">Slovenia</option>
+              <option value="SLB">Solomon Islands</option>
+              <option value="SOM">Somalia</option>
+              <option value="ZAF">South Africa</option>
+              <option value="SGS"
+                >South Georgia and the South Sandwich Islands</option
+              >
+              <option value="SSD">South Sudan</option>
+              <option value="ESP">Spain</option>
+              <option value="LKA">Sri Lanka</option>
+              <option value="SDN">Sudan</option>
+              <option value="SUR">Suriname</option>
+              <option value="SJM">Svalbard and Jan Mayen</option>
+              <option value="SWZ">Swaziland</option>
+              <option value="SWE">Sweden</option>
+              <option value="CHE">Switzerland</option>
+              <option value="SYR">Syrian Arab Republic</option>
+              <option value="TWN">Taiwan, Province of China</option>
+              <option value="TJK">Tajikistan</option>
+              <option value="TZA">Tanzania, United Republic of</option>
+              <option value="THA">Thailand</option>
+              <option value="TLS">Timor-Leste</option>
+              <option value="TGO">Togo</option>
+              <option value="TKL">Tokelau</option>
+              <option value="TON">Tonga</option>
+              <option value="TTO">Trinidad and Tobago</option>
+              <option value="TUN">Tunisia</option>
+              <option value="TUR">Turkey</option>
+              <option value="TKM">Turkmenistan</option>
+              <option value="TCA">Turks and Caicos Islands</option>
+              <option value="TUV">Tuvalu</option>
+              <option value="UGA">Uganda</option>
+              <option value="UKR">Ukraine</option>
+              <option value="ARE">United Arab Emirates</option>
+              <option value="GBR">United Kingdom</option>
+              <option value="USA">United States</option>
+              <option value="UMI">United States Minor Outlying Islands</option>
+              <option value="URY">Uruguay</option>
+              <option value="UZB">Uzbekistan</option>
+              <option value="VUT">Vanuatu</option>
+              <option value="VEN">Venezuela, Bolivarian Republic of</option>
+              <option value="VNM">Viet Nam</option>
+              <option value="VGB">Virgin Islands, British</option>
+              <option value="VIR">Virgin Islands, U.S.</option>
+              <option value="WLF">Wallis and Futuna</option>
+              <option value="ESH">Western Sahara</option>
+              <option value="YEM">Yemen</option>
+              <option value="ZMB">Zambia</option>
+              <option value="ZWE">Zimbabwe</option>
+            </select>
+            <select name="estados" class="hidden css-input" id="estados">
+              <option value="">Selecciona tu estado</option>
+              <option value="AGS">Aguascalientes</option>
+              <option value="BCN">Baja California</option>
+              <option value="BCS">Baja California Sur</option>
+              <option value="CAM">Campeche</option>
+              <option value="CMX">Ciudad de México</option>
+              <option value="CHP">Chiapas</option>
+              <option value="CHI">Chihuahua</option>
+              <option value="COA">Coahuila</option>
+              <option value="COL">Colima</option>
+              <option value="DUR">Durango</option>
+              <option value="GTO">Guanajuato</option>
+              <option value="GRO">Guerrero</option>
+              <option value="HGO">Hidalgo</option>
+              <option value="JAL">Jalisco</option>
+              <option value="MEX">M&eacute;xico</option>
+              <option value="MIC">Michoac&aacute;n</option>
+              <option value="MOR">Morelos</option>
+              <option value="NAY">Nayarit</option>
+              <option value="NLE">Nuevo Le&oacute;n</option>
+              <option value="OAX">Oaxaca</option>
+              <option value="PUE">Puebla</option>
+              <option value="QRO">Quer&eacute;taro</option>
+              <option value="ROO">Quintana Roo</option>
+              <option value="SLP">San Luis Potos&iacute;</option>
+              <option value="SIN">Sinaloa</option>
+              <option value="SON">Sonora</option>
+              <option value="TAB">Tabasco</option>
+              <option value="TAM">Tamaulipas</option>
+              <option value="TLX">Tlaxcala</option>
+              <option value="VER">Veracruz</option>
+              <option value="YUC">Yucat&aacute;n</option>
+              <option value="ZAC">Zacatecas</option>
+            </select>
+            <button id="submit-results" class="btn" disabled>
+              Enviar y ver resultados
+            </button>
+          </div>
+          <div id="override-score" class="hidden text-center"></div>
+          <div class="text-center">
+            <span id="error-message" class="error-message text-center"> </span>
+            <div class="text-center" id="loading-result" style="display: none;">
+              <div class="lds-hourglass"></div>
+              Espere un momento
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container hidden" id="results-table">
+      <table>
+        <thead>
+          <caption>
+            Tabla de Clasificación
+            <br />
+            <button class="btn btn-leaders active" id="btn-world-results">
+              Mundial 🌎
+            </button>
+            <button class="btn btn-leaders" id="btn-mexico-results">
+              México 🇲🇽
+            </button>
+            <div
+              class="text-center"
+              id="loading-leaderboard"
+              style="display: none;"
+            >
+              <div class="lds-hourglass"></div>
+              Cargando
+            </div>
+          </caption>
+          <tr id="t-header" class="t-header">
+            <th scope="col">Lugar</th>
+            <th scope="col">País</th>
+            <th scope="col">Seudónimo</th>
+            <th scope="col">Intentos</th>
+            <th scope="col">Tiempo</th>
+          </tr>
+        </thead>
+        <tbody id="results"></tbody>
+      </table>
+      <button id="play-again" class="btn mb-2 play-again results-play-btn">
+        Jugar de nuevo 😄
+      </button>
+    </div>
+    <footer>
+      <div class="footer">
+        <div class="footer-container">
+          <div class="footer-logo">
+            <img
+              src="https://www.filmoteca.unam.mx/wp-content/uploads/2019/04/pleca-institucionalUNAM-min-300x62.png"
+              alt=""
+            />
+          </div>
+          <span>
+            Hecho en México. Derechos Reservados, © 2019 UNAM/DGAC. Ésta página
+            puede ser reproducida con fines no lucrativos, siempre y cuando no
+            se mutile, <br />
+            se cite la fuente completa y su dirección electrónica. De otra forma
+            requiere permiso previo por escrito de la institución.</span
+          >
+        </div>
+      </div>
+    </footer>
+    <div id="info-modal" class="overlay">
+      <div class="popup" id="modal">
+        <a class="close-icon" id="">×</a>
+        <div id="content-info" class="content-info"></div>
+      </div>
+    </div>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-56298412-2"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "UA-56298412-2");
+    </script>
+    <script src="js/memory.js"></script>
   </body>
 </html>

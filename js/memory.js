@@ -128,8 +128,13 @@
       const itemToShow = datosApi.find((item) => {
         return item.nombre_img.includes(type);
       });
-      infoContent.innerHTML = itemToShow.info_img;
-      infoModal.classList.add("show");
+      infoContent.innerHTML = `<h3 id="content-header" class="header-content">${itemToShow.nombre_personaje}</h3><p>${itemToShow.info_img}</p>`;
+      document.body.style.overflow = "hidden";
+      infoModal.style.display = "block";
+      // element which needs to be scrolled to
+      // var element = document.querySelector("#content-header");
+      // scroll to element
+      infoContent.scrollTop = 0;
       closeInfoModal();
     }
 
@@ -399,7 +404,8 @@
         interval.pause();
         finalTime = timer.innerHTML;
         // show congratulations modal
-        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
+        modal.style.display = "block";
 
         // declare star rating variable
         var starRating = document.querySelector(".stars").innerHTML;
@@ -421,7 +427,8 @@
     // @description close icon on modal
     function closeModal() {
       closeicon.addEventListener("click", function (e) {
-        modal.classList.remove("show");
+        modal.style.display = "none";
+        document.body.style.overflow = "visible";
         startGame();
       });
     }
@@ -429,14 +436,16 @@
     const closeIconInfo = document.querySelector(".close-icon");
     function closeInfoModal() {
       closeIconInfo.addEventListener("click", function (e) {
-        infoModal.classList.remove("show");
+        document.body.style.overflow = "visible";
+        infoModal.style.display = "none";
         congratulations();
       });
     }
 
     // @desciption for user to play Again
     function playAgain() {
-      modal.classList.remove("show");
+      modal.style.display = "none";
+      document.body.style.overflow = "visible";
       gameContainer.classList.contains("hidden") &&
         gameContainer.classList.remove("hidden");
       !resultsContainer.classList.contains("hidden") &&
@@ -550,6 +559,7 @@
       result = null;
     }
 
+    const btnShowdResults = document.getElementById("show-results");
     const btnWorldResults = document.getElementById("btn-world-results");
     const btnMexicoResults = document.getElementById("btn-mexico-results");
     const btnsPlayAgain = document.querySelectorAll(".play-again");
@@ -563,6 +573,9 @@
     });
     btnMexicoResults.addEventListener("click", function () {
       getResults(true);
+    });
+    btnShowdResults.addEventListener("click", function () {
+      getResults();
     });
 
     function getResults(mexicoResults) {
